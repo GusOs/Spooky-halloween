@@ -350,6 +350,15 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/L_FG_Assets_Pack_Lite/Demo/cameraMove.cs"
+"Assets/Scripts/AudioManager.cs"
+"Assets/Scripts/EnemiesAttack.cs"
+"Assets/Scripts/EnemiesLife.cs"
+"Assets/Scripts/EnemiesMovement.cs"
+"Assets/Scripts/EnemiesSpawn.cs"
+"Assets/Scripts/GameManager.cs"
+"Assets/Scripts/PlayerAttack.cs"
+"Assets/Scripts/PlayerMovement.cs"
+"Assets/Scripts/PumpkinManager.cs"
 -langversion:9.0
 
 /deterministic
