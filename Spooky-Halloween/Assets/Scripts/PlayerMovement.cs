@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Playermovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     //variable del animator
@@ -13,6 +13,12 @@ public class Playermovement : MonoBehaviour
 
     //variable de velocidad
     public float speed = 6.0f;
+
+    // Variable velocidad movimientos
+	public float runSpeed = 3.0f;
+
+    //Variable de velocidad al girar
+	public float turnSpeed = 60.0f;
 
     //variable de gravedad
     public float gravity = 20.0f;
@@ -31,7 +37,7 @@ public class Playermovement : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        controller = GetComponent<charactercontroller>();
+        controller = GetComponent<CharacterController>();
         w_sp = speed; //read walk speed
         runSpeed = 1;
     }
@@ -48,28 +54,68 @@ public class Playermovement : MonoBehaviour
 
         if(Input.GetKey("w"))
         {
-            anim.setInteger("moving", 1);
+            anim.SetInteger("moving", 1);
             runSpeed = 1;
         }
         else 
         {
-            anim.setInteger("moving", 0);
+            anim.SetInteger("moving", 0);
         }
 
         if(Input.GetKey("s"))
         {
-            anim.setInteger("moving", 12);
+            anim.SetInteger("moving", 12);
         }
 
         //--------------------------------------------------------------------ATTACK
 
         if (Input.GetMouseButtonDown(0))
 		{ // attack1
-			anim.SetInteger("attack", 1);
+			anim.SetBool("attack", true);
 		}
 		else
         {
-			anim.SetInteger("attack", 0);
+			anim.SetBool("attack", false);
         }
-    }
+
+        //-------------------------------------------------------------------TURNS
+
+		var vert_modul = Mathf.Abs(Input.GetAxis("Vertical"));
+
+		if ((Input.GetAxis("Horizontal") > 0.1f) && (vert_modul > 0.3f))
+		{
+			anim.SetLayerWeight(1, 1f);
+			anim.SetBool("turn_right", true);
+		}
+		else if (vert_modul > 0.3f)
+		{
+			anim.SetBool("turn_right", false);
+		}
+
+		if ((Input.GetAxis("Horizontal") < -0.1f) && (vert_modul > 0.3f))
+		{
+			anim.SetLayerWeight(1, 1f);
+			anim.SetBool("turn_left", true);
+		}
+		else if (vert_modul > 0.3f)
+		{
+			anim.SetBool("turn_left", false);
+		}
+
+
+		//--------------------------------------------------------------- MOVE SCENE
+
+		if (controller.isGrounded)
+		{
+			moveDirection = transform.forward * Input.GetAxis("Vertical") * speed * runSpeed;
+
+			if (vert_modul > 0.2f)
+			{
+				float turn = Input.GetAxis("Horizontal");
+				transform.Rotate(0, turn * turnSpeed * Time.deltaTime, 0);
+			}
+		}
+		moveDirection.y -= gravity * Time.deltaTime;
+		controller.Move(moveDirection * Time.deltaTime);
+	}
 }
