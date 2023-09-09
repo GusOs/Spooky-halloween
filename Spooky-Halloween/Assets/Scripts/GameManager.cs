@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gamemanager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     //Instancia de la clase
     public static GameManager Instance;
@@ -16,7 +16,7 @@ public class Gamemanager : MonoBehaviour
     //Objeto panel rondas
 
     //Referencia a la vida de las calabazas
-    private PumpkinManager pumpKinScript;
+    //private PumpkinManager pumpKinScript;
 
 
     private void Awake()
@@ -28,17 +28,17 @@ public class Gamemanager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PumpkinManager = currentHealth.GetComponent<PumpkinManager>();
+       // PumpkinManager = currentHealth.GetComponent<PumpkinManager>();
         Time.timeScale = 1;
     }
 
     public void GameOver() 
     {
-        if(PumpkinManager.currentHealth <= 0 && isGameActive) 
+        /*if(PumpkinManager.currentHealth <= 0 && isGameActive) 
         {
             isGameActive = false;
 
-        }
+        }*/
     }
 
     public void Wingame() 
